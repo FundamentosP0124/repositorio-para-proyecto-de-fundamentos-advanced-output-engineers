@@ -5,11 +5,11 @@
 using namespace std; // Usar el espacio de nombres estándar
 
 // Definir la longitud de la carrera
-const int RACE_LENGTH = 100;
+const int DISTANCIA_CARRERA = 100;
 
 // Función para mostrar la posición actual de cada caballo en la consola
-void displayRace(int horsePositions[], int numHorses) {
-    for (int i = 0; i < numHorses; i++) { // Iterar sobre cada caballo
+void posicion(int horsePositions[], int numCaballos) {
+    for (int i = 0; i < numCaballos; i++) { // Iterar sobre cada caballo
         for (int j = 0; j < horsePositions[i]; j++) { // Mostrar la posición del caballo
             cout << "-"; // Mostrar un guion por cada paso del caballo
         }
@@ -19,7 +19,7 @@ void displayRace(int horsePositions[], int numHorses) {
 }
 
 // Función para esperar una cantidad específica de milisegundos
-void sleep(int milliseconds) {
+void esperar(int milliseconds) {
     clock_t start_time = clock(); // Registrar el tiempo de inicio
     while (clock() < start_time + milliseconds); // Esperar hasta que haya transcurrido el tiempo especificado
 }
@@ -27,12 +27,12 @@ void sleep(int milliseconds) {
 int main() {
     srand(time(0)); // Inicializar el generador de números aleatorios con la hora actual
 
-    int numHorses; // Variable para almacenar el número de caballos
-    cout << "Ingrese el número de caballos: "; // Solicitar al usuario que ingrese el número de caballos
-    cin >> numHorses; // Leer el número de caballos ingresado por el usuario
+    int numCaballos; // Variable para almacenar el número de caballos
+    cout << "Ingrese el numero de caballos: "; // Solicitar al usuario que ingrese el número de caballos
+    cin >> numCaballos; // Leer el número de caballos ingresado por el usuario
 
     // Crear un arreglo dinámico para almacenar la posición de cada caballo
-    int *horsePositions = new int[numHorses](); // Inicializar el arreglo con ceros
+    int *caballosPosiciciones = new int[numCaballos](); // Inicializar el arreglo con ceros
     
     bool raceOver = false; // Variable para determinar si la carrera ha terminado
     while (!raceOver) { // Bucle principal de la carrera
@@ -44,29 +44,29 @@ int main() {
         #endif
 
         // Actualizar las posiciones de los caballos
-        for (int i = 0; i < numHorses; i++) { // Iterar sobre cada caballo
-            if (horsePositions[i] < RACE_LENGTH) { // Si el caballo no ha terminado la carrera
-                horsePositions[i] += rand() % 3; // Movimiento aleatorio: 0, 1, o 2 pasos
+        for (int i = 0; i < numCaballos; i++) { // Iterar sobre cada caballo
+            if (caballosPosiciciones[i] < DISTANCIA_CARRERA) { // Si el caballo no ha terminado la carrera
+                caballosPosiciciones[i] += rand() % 3; // Movimiento aleatorio: 0, 1, o 2 pasos
             }
-            if (horsePositions[i] >= RACE_LENGTH) { // Si el caballo ha llegado a la meta
+            if (caballosPosiciciones[i] >= DISTANCIA_CARRERA) { // Si el caballo ha llegado a la meta
                 raceOver = true; // Marcar la carrera como terminada
             }
         }
 
         // Mostrar la carrera actualizada
-        displayRace(horsePositions, numHorses); // Llamar a la función para mostrar la carrera
+        posicion(caballosPosiciciones, numCaballos); // Llamar a la función para mostrar la carrera
 
         // Esperar un poco antes de la siguiente actualización
-        sleep(200); // Esperar 200 milisegundos
+        esperar(200); // Esperar 200 milisegundos
     }
 
     // Anunciar el caballo ganador
-    for (int i = 0; i < numHorses; i++) { // Iterar sobre cada caballo
-        if (horsePositions[i] >= RACE_LENGTH) { // Si el caballo ha llegado a la meta
-            cout << "¡El caballo " << i + 1 << " gana!" << endl; // Anunciar al ganador
+    for (int i = 0; i < numCaballos; i++) { // Iterar sobre cada caballo
+        if (caballosPosiciciones[i] >= DISTANCIA_CARRERA) { // Si el caballo ha llegado a la meta
+            cout << "El caballo " << i + 1 << " gana" << endl; // Anunciar al ganador
         }
     }
 
-    delete[] horsePositions; // Liberar la memoria asignada dinámicamente
+    delete[] caballosPosiciciones; // Liberar la memoria asignada dinámicamente
     return 0; // Terminar el programa
 }
