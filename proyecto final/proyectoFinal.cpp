@@ -5,7 +5,7 @@
 using namespace std; // Usar el espacio de nombres estándar
 
 // Definir la longitud de la carrera
-const int DISTANCIA_CARRERA = 10;
+const int DISTANCIA_CARRERA = 100;
 
 // Función para mostrar la posición actual de cada caballo en la consola
 void posicion(int horsePositions[], int numCaballos)
