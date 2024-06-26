@@ -94,7 +94,7 @@ int main()
     // Verificar si el usuario selecciono el caballo ganador
     if (eleccionUsuario == caballoGanador)
     {
-        cout << "Enhorabuena! El caballo seleccionado ha ganado.";
+        cout << "Enhorabuena! El caballo seleccionado ha ganado.\n";
     }
     else
     {
