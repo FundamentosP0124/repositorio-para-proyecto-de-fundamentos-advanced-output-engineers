@@ -82,10 +82,8 @@ int main()
 
     delete[] caballosPosiciciones; } // Liberar la memoria asignada dinámicamente
         break;
-
         case 2:
         break;
-
         case 3:
         cout << "Saliendo...";
         break;

@@ -31,7 +31,20 @@ void esperar(int milliseconds)
 
 int main()
 {
-    srand(time(0)); // Inicializar el generador de números aleatorios con la hora actual
+    int opcion;
+
+    do
+    {
+        cout << "Seleccione una opcion:\n";
+        cout << "1) Para jugar\n";
+        cout << "2) Para ver sus resultados\n";
+        cout << "3) Para salir\n";
+        cin >> opcion;
+
+        switch (opcion)
+        {
+        case 1:{ 
+            srand(time(0)); // Inicializar el generador de números aleatorios con la hora actual
 
     int numCaballos;                           // Variable para almacenar el número de caballos
     cout << "Ingrese el numero de caballos: "; // Solicitar al usuario que ingrese el número de caballos
@@ -85,9 +98,19 @@ int main()
     }
     else
     {
-        cout << "El caballo seleccionado no ha ganado. Suerte para la proxima";
+        cout << "El caballo seleccionado no ha ganado. Suerte para la proxima\n";
     }
     
-    delete[] caballosPosiciciones; // Liberar la memoria asignada dinámicamente
-    return 0;                      // Terminar el programa
-}
+    delete[] caballosPosiciciones; } // Liberar la memoria asignada dinámicamente
+    break;
+    case 2:
+    break;
+    case 3:
+    cout << "Saliendo...";
+    default:
+    cout << "No existe un valor para dicho numero\n";
+    }
+    } while (opcion !=3);
+    
+    return 0;   // Terminar el programa
+ }
