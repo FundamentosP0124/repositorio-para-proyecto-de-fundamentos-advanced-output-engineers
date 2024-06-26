@@ -100,7 +100,7 @@ int main()
     {
         cout << "El caballo seleccionado no ha ganado. Suerte para la proxima\n";
     }
-    
+    //hola mundo
     delete[] caballosPosiciciones; } // Liberar la memoria asignada dinámicamente
     break;
     case 2:
