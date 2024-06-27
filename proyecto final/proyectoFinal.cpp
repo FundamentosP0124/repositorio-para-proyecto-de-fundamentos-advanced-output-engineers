@@ -35,25 +35,30 @@ int main()
 {
     srand(time(0)); // Inicializar el generador de números aleatorios con la hora actual
     int opcion;
+        cout << "\n\033[1;36mCARRERA DE CABALLOS\033[0m\n";
 
     do
     {
-        cout << "Seleccione una opcion:\n";
-        cout << "1) Para jugar\n";
-        cout << "2) Para ver sus resultados\n";
-        cout << "3) Para salir\n";
+        cout << "\033[1;32m\n1) Para jugar\n\033[0m";
+        cout << "\033[1;34m2) Para ver sus resultados\n\033[0m";
+        cout << "\033[1;31m3) Para salir\n\033[0m";
+        cout << "\033[1;37m\nSeleccione una opcion: \033[0m";
         cin >> opcion;
 
         switch (opcion)
         {
         case 1:
         {
-            int numCaballos;                           // Variable para almacenar el número de caballos
-            cout << "Ingrese el numero de caballos: "; // Solicitar al usuario que ingrese el número de caballos
-            cin >> numCaballos;                        // Leer el número de caballos ingresado por el usuario
+
+            int numCaballos; // Variable para almacenar el número de caballos
+            do
+            {
+                cout << "Por favor, ingrese el numero de caballos (entre 2 y 10): "; // Solicitar al usuario que ingrese el número de caballos
+                cin >> numCaballos;                                                  // Leer el número de caballos ingresado por el usuario
+            } while (numCaballos < 2 || numCaballos > 10); // Validar que el número de caballos esté entre 2 y 10
 
             int eleccionUsuario;
-            cout << "Elija el número del caballo que cree que va a ganar (1 a " << numCaballos << "): ";
+            cout << "Elija el numero del caballo que cree que va a ganar (1 a " << numCaballos << "): ";
             cin >> eleccionUsuario;
             // Crear un arreglo dinámico para almacenar la posición de cada caballo
             int *caballosPosiciciones = new int[numCaballos](); // Inicializar el arreglo con ceros
@@ -110,7 +115,14 @@ int main()
 
         case 2:
         {
-            cout << "Has ganado " << victoriasUsuario << " veces." << endl;
+            if (victoriasUsuario == 1)
+            {
+                cout << "Has ganado " << victoriasUsuario << " vez." << endl;
+            }
+            else
+            {
+                cout << "Has ganado " << victoriasUsuario << " veces." << endl;
+            }
         }
         break;
 
