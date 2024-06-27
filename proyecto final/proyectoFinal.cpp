@@ -29,8 +29,11 @@ void esperar(int milliseconds)
         ; // Esperar hasta que haya transcurrido el tiempo especificado
 }
 
+int victoriasUsuario = 0;
+
 int main()
 {
+    srand(time(0)); // Inicializar el generador de números aleatorios con la hora actual
     int opcion;
 
     do
@@ -43,74 +46,84 @@ int main()
 
         switch (opcion)
         {
-        case 1:{ 
-            srand(time(0)); // Inicializar el generador de números aleatorios con la hora actual
+        case 1:
+        { 
+            int numCaballos;                           // Variable para almacenar el número de caballos
+            cout << "Ingrese el numero de caballos: "; // Solicitar al usuario que ingrese el número de caballos
+            cin >> numCaballos;                        // Leer el número de caballos ingresado por el usuario
 
-    int numCaballos;                           // Variable para almacenar el número de caballos
-    cout << "Ingrese el numero de caballos: "; // Solicitar al usuario que ingrese el número de caballos
-    cin >> numCaballos;                        // Leer el número de caballos ingresado por el usuario
+            int eleccionUsuario;
+            cout << "Elija el número del caballo que cree que va a ganar (1 a " << numCaballos << "): ";
+            cin >> eleccionUsuario;
+            // Crear un arreglo dinámico para almacenar la posición de cada caballo
+            int *caballosPosiciciones = new int[numCaballos](); // Inicializar el arreglo con ceros
 
-    int eleccionUsuario;
-    cout << "Elija el número del caballo que cree que va a ganar (1 a " << numCaballos << "): ";
-    cin >> eleccionUsuario;
-    // Crear un arreglo dinámico para almacenar la posición de cada caballo
-    int *caballosPosiciciones = new int[numCaballos](); // Inicializar el arreglo con ceros
+            bool raceOver = false;   // Variable para determinar si la carrera ha terminado
+            int caballoGanador = -1; // Variable para almacenar el número del caballo ganador
 
-    bool raceOver = false;   // Variable para determinar si la carrera ha terminado
-    int caballoGanador = -1; // Variable para almacenar el número del caballo ganador
-
-    while (!raceOver)
-    { // Bucle principal de la carrera
-// Limpiar la pantalla
+            while (!raceOver)
+            { // Bucle principal de la carrera
+                // Limpiar la pantalla
 #ifdef _WIN32
-        system("cls"); // Limpiar pantalla en Windows
+                system("cls"); // Limpiar pantalla en Windows
 #else
-        system("clear"); // Limpiar pantalla en otros sistemas operativos
+                system("clear"); // Limpiar pantalla en otros sistemas operativos
 #endif
 
-        // Actualizar las posiciones de los caballos
-        for (int i = 0; i < numCaballos; i++)
-        { // Iterar sobre cada caballo
-            if (caballosPosiciciones[i] < DISTANCIA_CARRERA)
-            {                                          // Si el caballo no ha terminado la carrera
-                caballosPosiciciones[i] += rand() % 3; // Movimiento aleatorio: 0, 1, o 2 pasos
+                // Actualizar las posiciones de los caballos
+                for (int i = 0; i < numCaballos; i++)
+                { // Iterar sobre cada caballo
+                    if (caballosPosiciciones[i] < DISTANCIA_CARRERA)
+                    {                                          // Si el caballo no ha terminado la carrera
+                        caballosPosiciciones[i] += rand() % 3; // Movimiento aleatorio: 0, 1, o 2 pasos
+                    }
+                    if (caballosPosiciciones[i] >= DISTANCIA_CARRERA && caballoGanador == -1)
+                    {                           // Si el caballo ha llegado a la meta
+                        caballoGanador = i + 1; // Almacenar el número del caballo ganador
+                        raceOver = true;        // Marcar la carrera como terminada
+                    }
+                }
+
+               // Mostrar la carrera actualizada
+               posicion(caballosPosiciciones, numCaballos); // Llamar a la función para mostrar la carrera
+
+               // Esperar un poco antes de la siguiente actualización
+               esperar(200); // Esperar 200 milisegundos
             }
-            if (caballosPosiciciones[i] >= DISTANCIA_CARRERA && caballoGanador == -1)
-            {                           // Si el caballo ha llegado a la meta
-                caballoGanador = i + 1; // Almacenar el número del caballo ganador
-                raceOver = true;        // Marcar la carrera como terminada
+           // Anuncia el caballo ganador  
+           cout << "El caballo ganador es el numero " << caballoGanador << " Gana!" << endl;
+
+           // Verificar si el usuario selecciono el caballo ganador
+           if (eleccionUsuario == caballoGanador)
+            { 
+               cout << "Enhorabuena! El caballo seleccionado ha ganado.\n";
+               victoriasUsuario++; // Incrementar el contador de victorias del usuario
             }
+           else
+            {
+                cout << "El caballo seleccionado no ha ganado. Suerte para la proxima\n";
+            }
+    
+           delete[] caballosPosiciciones;  // Liberar la memoria asignada dinámicamente
         }
+        break;
 
-        // Mostrar la carrera actualizada
-        posicion(caballosPosiciciones, numCaballos); // Llamar a la función para mostrar la carrera
 
-        // Esperar un poco antes de la siguiente actualización
-        esperar(200); // Esperar 200 milisegundos
-    }
-    // Anuncia el caballo ganador  
-    cout << "El caballo ganador es el numero " << caballoGanador << " Gana!" << endl;
+        case 2:
+        {
+            cout << "Has ganado " << victoriasUsuario << " veces." << endl;
+        }
+        break;
 
-    // Verificar si el usuario selecciono el caballo ganador
-    if (eleccionUsuario == caballoGanador)
-    {
-        cout << "Enhorabuena! El caballo seleccionado ha ganado.\n";
-    }
-    else
-    {
-        cout << "El caballo seleccionado no ha ganado. Suerte para la proxima\n";
-    }
-    //hola mundo
-    delete[] caballosPosiciciones; } // Liberar la memoria asignada dinámicamente
-    break;
-    case 2:
-    break;
-    case 3:
-    cout << "Saliendo...";
-    default:
-    cout << "No existe un valor para dicho numero\n";
-    }
-    } while (opcion !=3);
+        case 3:
+            cout << "Saliendo..." << endl;
+            break;
+
+        default:
+            cout << "No existe un valor para dicho numero\n";
+            break;
+        }
+    } while (opcion != 3);
     
     return 0;   // Terminar el programa
- }
+}
