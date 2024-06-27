@@ -5,7 +5,7 @@
 using namespace std; // Usar el espacio de nombres estándar
 
 // Definir la longitud de la carrera
-const int DISTANCIA_CARRERA = 100;
+const int DISTANCIA_CARRERA = 5;
 
 // Función para mostrar la posición actual de cada caballo en la consola
 void posicion(int horsePositions[], int numCaballos)
@@ -47,7 +47,7 @@ int main()
         switch (opcion)
         {
         case 1:
-        { 
+        {
             int numCaballos;                           // Variable para almacenar el número de caballos
             cout << "Ingrese el numero de caballos: "; // Solicitar al usuario que ingrese el número de caballos
             cin >> numCaballos;                        // Leer el número de caballos ingresado por el usuario
@@ -63,7 +63,7 @@ int main()
 
             while (!raceOver)
             { // Bucle principal de la carrera
-                // Limpiar la pantalla
+              // Limpiar la pantalla
 #ifdef _WIN32
                 system("cls"); // Limpiar pantalla en Windows
 #else
@@ -84,30 +84,29 @@ int main()
                     }
                 }
 
-               // Mostrar la carrera actualizada
-               posicion(caballosPosiciciones, numCaballos); // Llamar a la función para mostrar la carrera
+                // Mostrar la carrera actualizada
+                posicion(caballosPosiciciones, numCaballos); // Llamar a la función para mostrar la carrera
 
-               // Esperar un poco antes de la siguiente actualización
-               esperar(200); // Esperar 200 milisegundos
+                // Esperar un poco antes de la siguiente actualización
+                esperar(200); // Esperar 200 milisegundos
             }
-           // Anuncia el caballo ganador  
-           cout << "El caballo ganador es el numero " << caballoGanador << " Gana!" << endl;
+            // Anuncia el caballo ganador
+            cout << "El caballo ganador es el numero " << caballoGanador << " Gana!" << endl;
 
-           // Verificar si el usuario selecciono el caballo ganador
-           if (eleccionUsuario == caballoGanador)
-            { 
-               cout << "Enhorabuena! El caballo seleccionado ha ganado.\n";
-               victoriasUsuario++; // Incrementar el contador de victorias del usuario
+            // Verificar si el usuario selecciono el caballo ganador
+            if (eleccionUsuario == caballoGanador)
+            {
+                cout << "Enhorabuena! El caballo seleccionado ha ganado.\n";
+                victoriasUsuario++; // Incrementar el contador de victorias del usuario
             }
-           else
+            else
             {
                 cout << "El caballo seleccionado no ha ganado. Suerte para la proxima\n";
             }
-    
-           delete[] caballosPosiciciones;  // Liberar la memoria asignada dinámicamente
+
+            delete[] caballosPosiciciones; // Liberar la memoria asignada dinámicamente
         }
         break;
-
 
         case 2:
         {
@@ -124,6 +123,6 @@ int main()
             break;
         }
     } while (opcion != 3);
-    
-    return 0;   // Terminar el programa
+
+    return 0; // Terminar el programa
 }
