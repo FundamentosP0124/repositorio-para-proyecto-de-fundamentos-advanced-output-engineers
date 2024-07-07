@@ -1,150 +1,147 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <iomanip>
-#include "colors.h"  
-#include <limits>
-using namespace std;
+#include <iostream> // Incluye la biblioteca estándar de entrada y salida
+#include <cstdlib>  // Incluye funciones de utilidad general como generación de números aleatorios
+#include <ctime>    // Incluye funciones relacionadas con el manejo de tiempo (para srand)
+#include <iomanip>  // Incluye herramientas para manipular la salida de datos formateados
+#include "colors.h"  // Supone un archivo de encabezado personalizado para manejar colores en la consola
+#include <limits>   // Incluye definiciones de características de tipos fundamentales, como los límites de los tipos numéricos
 
-const int DISTANCIA_CARRERA = 100;
-const int MAX_PARTICIPANTES = 10;
+using namespace std; // Evita la necesidad de prefijar las funciones de la biblioteca estándar con 'std::'
 
+const int DISTANCIA_CARRERA = 100;  // Constante para la longitud de la carrera
+const int MAX_PARTICIPANTES = 10;   // Constante para el número máximo de participantes
+
+// Definición de la estructura para almacenar los datos de cada participante
 struct participante {
-    string nombre;
-    char identificador;
+    string nombre;          // Nombre del participante
+    char identificador;     // Identificador único para el participante
 };
 
+// Función para mostrar la posición de cada participante en la carrera
 void posicion(int horsePositions[], participante participantes[], int numCaballos) {
     for (int i = 0; i < numCaballos; i++) {
         for (int j = 0; j < horsePositions[i]; j++) {
-            cout << "-";
+            cout << "-";  // Imprime un guión por cada unidad de distancia recorrida
         }
-        cout << "> (""Caballo de: "<< participantes[i].nombre << ") " << i + 1 << endl;
+        cout << "> (" "Caballo de" << participantes[i].nombre << ") " << i + 1 << endl;  // Muestra el nombre y el número del participante
     }
-    cout << endl;
+    cout << endl; // Imprime una línea en blanco después de la salida de todos los participantes
 }
 
+// Función para simular una pausa o espera en la ejecución del programa
 void esperar(int milliseconds) {
-    clock_t start_time = clock();
-    while (clock() < start_time + milliseconds);
+    clock_t start_time = clock();  // Toma el tiempo de inicio
+    while (clock() < start_time + milliseconds);  // Bucle vacío que dura el número de milisegundos especificado
 }
 
+// Función principal del programa
 int main() {
-    srand(time(0));
-    int opcion, numeroParticipante = 0, victoriasUsuario = 0;
-    participante participantes[MAX_PARTICIPANTES];
+    srand(time(0));  // Inicializa el generador de números aleatorios
+    int opcion, numeroParticipante = 0, victoriasUsuario = 0;  // Variables para controlar opciones y estado del juego
+    participante participantes[MAX_PARTICIPANTES];  // Array para almacenar los participantes
 
-    cout << "\n\033[1;36mCARRERA DE CABALLOS\033[0m\n";
+    cout << "\n\033[1;36mCARRERA DE CABALLOS\033[0m\n";  // Muestra el título del programa
     do {
+        // Muestra las opciones del menú principal
         cout << GREEN << "\n1) Inscribe los participantes";
         cout << BLUE << "\n2) Para jugar (Antes de jugar debes inscribir participantes)\n";
         cout << GRAY << "3) Para ver sus resultados\n";
         cout << ORANGE << "4) Desarrolladores\n";
         cout << RED << "5) Para salir\n";
         cout << WHITE << "\nSeleccione una opcion: ";
-        cin >> opcion;
+        cin >> opcion;  // Lee la opción elegida por el usuario
 
+        // Procesa la opción seleccionada
         switch (opcion) {
         case 2:
             {
                 if (numeroParticipante == 0) {
-                    cout << "Primero debe inscribir a los participantes.\n";
+                    cout << "Primero debe inscribir a los participantes.\n";  // Verifica que haya participantes
                     break;
                 }
-
                 int eleccionUsuario;
                 cout << "Elija el numero del caballo que cree que va a ganar (1 a " << numeroParticipante << "): ";
-                cin >> eleccionUsuario;
+                cin >> eleccionUsuario;  // Permite al usuario seleccionar un caballo
 
-                int* caballosPosiciones = new int[numeroParticipante](); // Array for horse positions
+                int* caballosPosiciones = new int[numeroParticipante](); // Crea un array para las posiciones de los caballos
                 bool raceOver = false;
                 int caballoGanador = -1;
 
                 while (!raceOver) {
 #ifdef _WIN32
-                    system("cls");
+                    system("cls"); // Limpia la pantalla en Windows
 #else
-                    system("clear");
+                    system("clear"); // Limpia la pantalla en otros sistemas operativos
 #endif
                     for (int i = 0; i < numeroParticipante; i++) {
                         if (caballosPosiciones[i] < DISTANCIA_CARRERA) {
-                            caballosPosiciones[i] += rand() % 3; // Random advance 0-2 steps
+                            caballosPosiciones[i] += rand() % 3; // Avanza aleatoriamente cada caballo
                         }
                         if (caballosPosiciones[i] >= DISTANCIA_CARRERA && caballoGanador == -1) {
-                            caballoGanador = i + 1;
+                            caballoGanador = i + 1; // Determina el ganador
                             raceOver = true;
                         }
                     }
-
-                    posicion(caballosPosiciones, participantes, numeroParticipante);
-                    esperar(200);
+                    posicion(caballosPosiciones, participantes, numeroParticipante); // Muestra las posiciones actuales
+                    esperar(200);  // Espera 200 milisegundos antes de actualizar la pantalla
                 }
                 cout << "El caballo ganador es el numero " << caballoGanador << ". ¡Gana!" << endl;
 
                 if (eleccionUsuario == caballoGanador) {
                     cout << "Enhorabuena! El caballo seleccionado ha ganado.\n";
-                    victoriasUsuario++;
+                    victoriasUsuario++;  // Incrementa el contador de victorias del usuario
                 } else {
                     cout << "El caballo seleccionado no ha ganado. Suerte para la proxima\n";
                 }
 
-                delete[] caballosPosiciones;
+                delete[] caballosPosiciones; // Libera la memoria asignada dinámicamente
             }
             break;
         case 3:
+            // Muestra el número de veces que el usuario ha ganado
             cout << (victoriasUsuario == 1 ? "Has ganado 1 vez." : "Has ganado " + to_string(victoriasUsuario) + " veces.") << endl;
             break;
         case 4:
-            {
-                const int width = 25;
-                cout << left << setw(width) << "\nNombres"
-                     << setw(width) << "Apellidos"
-                     << setw(width) << "Carnet" << endl;
-                cout << setfill('-') << setw(width * 3) << "" << setfill(' ') << endl;
-                cout << setw(width) << "Gerson Alejandro"
-                     << setw(width) << "Nerio Melgar"
-                     << setw(width) << "00132024" << endl;
-                cout << setw(width) << "Erick Alejandro"
-                     << setw(width) << "Mejicanos Mariona"
-                     << setw(width) << "00057324" << endl;
-                cout << setw(width) << "Edwin Daniel"
-                     << setw(width) << "Leiva Barrera"
-                     << setw(width) << "00136124" << endl;
-            }
+            // Muestra información de los desarrolladores
+            cout << left << setw(25) << "\nNombres" << setw(25) << "Apellidos" << setw(25) << "Carnet" << endl;
+            cout << setfill('-') << setw(75) << "" << setfill(' ') << endl;
+            cout << setw(25) << "Gerson Alejandro" << setw(25) << "Nerio Melgar" << setw(25) << "00132024" << endl;
+            cout << setw(25) << "Erick Alejandro" << setw(25) << "Mejicanos Mariona" << setw(25) << "00057324" << endl;
+            cout << setw(25) << "Edwin Daniel" << setw(25) << "Leiva Barrera" << setw(25) << "00136124" << endl;
             break;
         case 1:
-            {
-                cout << "Ingrese el numero de participantes (hasta un maximo de " << MAX_PARTICIPANTES << "): ";
-                while (!(cin >> numeroParticipante) || numeroParticipante < 1 || numeroParticipante > MAX_PARTICIPANTES) {
-                    if (cin.fail()) {
-                        cin.clear();
-                        cout << "Entrada invalida. Por favor, ingrese un numero entre 1 y " << MAX_PARTICIPANTES << ": ";
-                    } else {
-                        cout << "El numero debe estar entre 1 y " << MAX_PARTICIPANTES << ". Intente de nuevo: ";
-                    }
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            // Permite al usuario inscribir participantes
+            cout << "Ingrese el numero de participantes (hasta un maximo de " << MAX_PARTICIPANTES << "): ";
+            while (!(cin >> numeroParticipante) || numeroParticipante < 1 || numeroParticipante > MAX_PARTICIPANTES) {
+                if (cin.fail()) {
+                    cin.clear();
+                    cout << "Entrada invalida. Por favor, ingrese un numero entre 1 y " << MAX_PARTICIPANTES << ": ";
+                } else {
+                    cout << "El numero debe estar entre 1 y " << MAX_PARTICIPANTES << ". Intente de nuevo: ";
                 }
-                for (int i = 0; i < numeroParticipante; i++) {
-                    cout << "Ingrese el nombre del participante " << i + 1 << ": ";
-                    cin >> ws;
-                    getline(cin, participantes[i].nombre);
-                    cout << "Ingrese un caracter identificativo para " << participantes[i].nombre << ": ";
-                    cin >> participantes[i].identificador;
-                }
-                cout << "Participantes inscritos:\n";
-                for (int i = 0; i < numeroParticipante; i++) {
-                    cout << "Nombre: " << participantes[i].nombre << ", Identificador: " << participantes[i].identificador << endl;
-                }
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            for (int i = 0; i < numeroParticipante; i++) {
+                cout << "Ingrese el nombre del participante " << i + 1 << ": ";
+                cin >> ws;
+                getline(cin, participantes[i].nombre);
+                cout << "Ingrese un caracter identificativo para " << participantes[i].nombre << ": ";
+                cin >> participantes[i].identificador;
+            }
+            cout << "Participantes inscritos:\n";
+            for (int i = 0; i < numeroParticipante; i++) {
+                cout << "Nombre: " << participantes[i].nombre << ", Identificador: " << participantes[i].identificador << endl;
             }
             break;
         case 5:
+            // Sale del programa
             cout << "Saliendo..." << endl;
             break;
         default:
+            // Gestiona entradas no válidas
             cout << "No existe un valor para dicho numero\n";
             break;
         }
-    } while (opcion != 5);
+    } while (opcion != 5); // Continúa mostrando el menú hasta que se seleccione la opción de salir
 
-    return 0;
+    return 0; // Termina la ejecución del programa
 }
