@@ -48,13 +48,13 @@ int main()
     int opcion, numeroParticipante = 0, victoriasUsuario = 0; // Variables para controlar opciones y estado del juego
     participante participantes[MAX_PARTICIPANTES];            // Array para almacenar los participantes
 
-    cout << "\n\033[1;36mCARRERA DE CABALLOS\033[0m\n"; // Muestra el título del programa
+    cout << GRAY << "\n------------------------CARRERA DE CABALLOS----------------------\n"; // titulo
     do
     {
         // Muestra las opciones del menú principal
         cout << GREEN << "\n1) Inscribe los participantes";
         cout << BLUE << "\n2) Para jugar (Antes de jugar debes inscribir participantes)\n";
-        cout << GRAY << "3) Para ver sus resultados\n";
+        cout << ROSE << "3) Para ver sus resultados\n";
         cout << ORANGE << "4) Desarrolladores\n";
         cout << RED << "5) Para salir\n";
         cout << WHITE << "\nSeleccione una opcion: ";
@@ -63,6 +63,36 @@ int main()
         // Procesa la opción seleccionada
         switch (opcion)
         {
+        case 1:
+            // Permite al usuario inscribir participantes
+            cout << "Ingrese el numero de participantes (hasta un maximo de " << MAX_PARTICIPANTES << "): ";
+            while (!(cin >> numeroParticipante) || numeroParticipante < 1 || numeroParticipante > MAX_PARTICIPANTES)
+            {
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cout << "Entrada invalida. Por favor, ingrese un numero entre 1 y " << MAX_PARTICIPANTES << ": ";
+                }
+                else
+                {
+                    cout << "El numero debe estar entre 1 y " << MAX_PARTICIPANTES << ". Intente de nuevo: ";
+                }
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            for (int i = 0; i < numeroParticipante; i++)
+            {
+                cout << "Ingrese el nombre del participante " << i + 1 << ": ";
+                cin >> ws;
+                getline(cin, participantes[i].nombre);
+                cout << "Ingrese un caracter identificativo para " << participantes[i].nombre << ": ";
+                cin >> participantes[i].identificador;
+            }
+            cout << "Participantes inscritos:\n";
+            for (int i = 0; i < numeroParticipante; i++)
+            {
+                cout << "Nombre: " << participantes[i].nombre << ", Identificador: " << participantes[i].identificador << endl;
+            }
+            break;
         case 2:
         {
             if (numeroParticipante == 0)
@@ -127,36 +157,7 @@ int main()
             cout << setw(25) << "Erick Alejandro" << setw(25) << "Mejicanos Mariona" << setw(25) << "00057324" << endl;
             cout << setw(25) << "Edwin Daniel" << setw(25) << "Leiva Barrera" << setw(25) << "00136124" << endl;
             break;
-        case 1:
-            // Permite al usuario inscribir participantes
-            cout << "Ingrese el numero de participantes (hasta un maximo de " << MAX_PARTICIPANTES << "): ";
-            while (!(cin >> numeroParticipante) || numeroParticipante < 1 || numeroParticipante > MAX_PARTICIPANTES)
-            {
-                if (cin.fail())
-                {
-                    cin.clear();
-                    cout << "Entrada invalida. Por favor, ingrese un numero entre 1 y " << MAX_PARTICIPANTES << ": ";
-                }
-                else
-                {
-                    cout << "El numero debe estar entre 1 y " << MAX_PARTICIPANTES << ". Intente de nuevo: ";
-                }
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-            for (int i = 0; i < numeroParticipante; i++)
-            {
-                cout << "Ingrese el nombre del participante " << i + 1 << ": ";
-                cin >> ws;
-                getline(cin, participantes[i].nombre);
-                cout << "Ingrese un caracter identificativo para " << participantes[i].nombre << ": ";
-                cin >> participantes[i].identificador;
-            }
-            cout << "Participantes inscritos:\n";
-            for (int i = 0; i < numeroParticipante; i++)
-            {
-                cout << "Nombre: " << participantes[i].nombre << ", Identificador: " << participantes[i].identificador << endl;
-            }
-            break;
+
         case 5:
             // Sale del programa
             cout << "Saliendo..." << endl;
