@@ -9,14 +9,12 @@ using namespace std; // Evita la necesidad de prefijar las funciones de la bibli
 
 const int DISTANCIA_CARRERA = 100; // Constante para la longitud de la carrera
 const int MAX_PARTICIPANTES = 10;  // Constante para el número máximo de participantes
-
 // Definición de la estructura para almacenar los datos de cada participante
 struct participante
 {
     string nombre;      // Nombre del participante
     char identificador; // Identificador único para el participante
 };
-
 // Funcion para Inscribir jugadores
 void inscribirParticipantes(participante participantes[], int& numeroParticipante)
 {
@@ -49,7 +47,6 @@ void inscribirParticipantes(participante participantes[], int& numeroParticipant
         cout << "Nombre: " << participantes[i].nombre << ", Identificador: " << participantes[i].identificador << endl;
     }
 }
-
 // Función para mostrar la posición de cada participante en la carrera
 void posicion(int horsePositions[], participante participantes[], int numCaballos)
 {
@@ -65,7 +62,6 @@ void posicion(int horsePositions[], participante participantes[], int numCaballo
     }
     cout << endl; // Imprime una línea en blanco después de la salida de todos los participantes
 }
-
 // Función para simular una pausa o espera en la ejecución del programa
 void esperar(int milliseconds)
 {
@@ -73,7 +69,7 @@ void esperar(int milliseconds)
     while (clock() < start_time + milliseconds)
         ; // Bucle vacío que dura el número de milisegundos especificado
 }
-
+// funcion para iniciar la carrera
 void jugarCarrera(participante participantes[], int numeroParticipante, int& victoriasUsuario)
 {
     if (numeroParticipante == 0)
@@ -125,11 +121,11 @@ void jugarCarrera(participante participantes[], int numeroParticipante, int& vic
 
     delete[] caballosPosiciones; // Libera la memoria asignada dinámicamente
 }
-
+//Funcion Para mostrar los resultados
 void mostrarResultados(int victoriasUsuario) {
     cout << (victoriasUsuario == 1 ? "Has ganado 1 vez." : "Has ganado " + to_string(victoriasUsuario) + " veces.") << endl;
 }
-
+//funcion para mostrar los nombres del equipo
 void mostrarDesarrolladores() {
     cout << left << setw(25) << "\nNombres" << setw(25) << "Apellidos" << setw(25) << "Carnet" << endl;
     cout << setfill('-') << setw(75) << "" << setfill(' ') << endl;
@@ -138,9 +134,7 @@ void mostrarDesarrolladores() {
     cout << setw(25) << "Edwin Daniel" << setw(25) << "Leiva Barrera" << setw(25) << "00136124" << endl;
 }
 
-
-int main()
-{
+int main(){
 
     srand(time(0));                                           // Inicializa el generador de números aleatorios
     int opcion, numeroParticipante = 0, victoriasUsuario = 0; // Variables para controlar opciones y estado del juego
@@ -165,11 +159,10 @@ int main()
             inscribirParticipantes(participantes, numeroParticipante); // Llama a la función para inscribir participantes
             break;
         case 2:
-            jugarCarrera(participantes, numeroParticipante, victoriasUsuario);
+            jugarCarrera(participantes, numeroParticipante, victoriasUsuario); // llama a la funcion para iniciar carrera
              break;
         case 3:
-            // Muestra el número de veces que el usuario ha ganado
-            mostrarResultados(victoriasUsuario);
+            mostrarResultados(victoriasUsuario); // Muestra el número de veces que el usuario ha ganado
             break;
         case 4:
             // Muestra información de los desarrolladores
