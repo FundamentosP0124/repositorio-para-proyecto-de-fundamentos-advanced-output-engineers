@@ -19,6 +19,7 @@ struct participante
 // funcion para guardar participantes en archivo .txt
 void guardarParticipantes(participante participantes[], int numeroParticipantes) {
     ofstream archivo("participantes.txt");
+    //Titulo del archivo//
     archivo <<"-----NOMBRES Y IDENTIFICADORES DE JUGADORES ----------"<< endl;
     archivo << left << setw(25) << "\nNombre" << setw(25) << "Identificador" << setw(25) << endl;
     archivo << setfill('-') << setw(75) << "" << setfill(' ') << endl;
@@ -69,7 +70,7 @@ void posicion(int horsePositions[], participante participantes[], int numCaballo
             cout << "-"; // Imprime un guión por cada unidad de distancia recorrida
         }
         cout << "> ("
-                "Caballo de"
+                "Caballo de "
              << participantes[i].nombre << ") " << i + 1 << endl; // Muestra el nombre y el número del participante
     }
     cout << endl; // Imprime una línea en blanco después de la salida de todos los participantes
