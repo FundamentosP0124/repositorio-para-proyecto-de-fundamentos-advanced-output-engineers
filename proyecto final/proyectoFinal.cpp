@@ -4,6 +4,7 @@
 #include <iomanip>  // Incluye herramientas para manipular la salida de datos formateados
 #include "colors.h" // Supone un archivo de encabezado personalizado para manejar colores en la consola
 #include <limits>   // Incluye definiciones de características de tipos fundamentales, como los límites de los tipos numéricos
+#include <fstream>
 
 using namespace std; // Evita la necesidad de prefijar las funciones de la biblioteca estándar con 'std::'
 
@@ -15,6 +16,17 @@ struct participante
     string nombre;      // Nombre del participante
     char identificador; // Identificador único para el participante
 };
+// funcion para guardar participantes en archivo .txt
+void guardarParticipantes(participante participantes[], int numeroParticipantes) {
+    ofstream archivo("participantes.txt");
+    archivo <<"-----NOMBRES Y IDENTIFICADORES DE JUGADORES ----------"<< endl;
+    archivo << left << setw(25) << "\nNombre" << setw(25) << "Identificador" << setw(25) << endl;
+    archivo << setfill('-') << setw(75) << "" << setfill(' ') << endl;
+    for (int i = 0; i < numeroParticipantes; i++) {
+        archivo << setw(25) << participantes[i].nombre << setw(25) << participantes[i].identificador << endl;
+    }
+    archivo.close();
+}
 // Funcion para Inscribir jugadores
 void inscribirParticipantes(participante participantes[], int& numeroParticipante)
 {
@@ -87,11 +99,11 @@ void jugarCarrera(participante participantes[], int numeroParticipante, int& vic
 
     while (!raceOver)
     {
-#ifdef _WIN32
+           #ifdef _WIN32
         system("cls"); // Limpia la pantalla en Windows
-#else
+           #else
         system("clear"); // Limpia la pantalla en otros sistemas operativos
-#endif
+            #endif
         for (int i = 0; i < numeroParticipante; i++)
         {
             if (caballosPosiciones[i] < DISTANCIA_CARRERA)
@@ -133,6 +145,12 @@ void mostrarDesarrolladores() {
     cout << setw(25) << "Erick Alejandro" << setw(25) << "Mejicanos Mariona" << setw(25) << "00057324" << endl;
     cout << setw(25) << "Edwin Daniel" << setw(25) << "Leiva Barrera" << setw(25) << "00136124" << endl;
 }
+// funcion para registrar datos en archivo .txt, guardar los participantes
+
+
+
+
+
 
 int main(){
 
@@ -157,6 +175,7 @@ int main(){
         {
         case 1:
             inscribirParticipantes(participantes, numeroParticipante); // Llama a la función para inscribir participantes
+            guardarParticipantes(participantes,numeroParticipante);
             break;
         case 2:
             jugarCarrera(participantes, numeroParticipante, victoriasUsuario); // llama a la funcion para iniciar carrera
